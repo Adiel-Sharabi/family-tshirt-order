@@ -202,10 +202,37 @@ async function loadOrders() {
     const backendConfigured = CONFIG.APPS_SCRIPT_URL && !CONFIG.APPS_SCRIPT_URL.includes('YOUR_');
 
     if (!backendConfigured) {
-        // No backend yet — show empty dashboard
-        ordersData = { success: true, orders: [], families: [] };
+        // No backend — read from localStorage
+        const saved = JSON.parse(localStorage.getItem('tshirt_orders') || '[]');
+        const orders = [];
+        const familyMap = {};
+
+        saved.forEach(entry => {
+            entry.orders.forEach(o => {
+                const order = {
+                    timestamp: entry.timestamp || '',
+                    familyName: entry.familyName,
+                    familyContact: entry.familyContact,
+                    memberName: o.memberName || '-',
+                    shirtType: o.shirtType,
+                    color: o.color,
+                    sizeCategory: o.sizeCategory,
+                    size: o.size,
+                    quantity: o.quantity,
+                    notes: o.notes || '',
+                };
+                orders.push(order);
+
+                if (!familyMap[entry.familyName]) {
+                    familyMap[entry.familyName] = { name: entry.familyName, contact: entry.familyContact, orders: [] };
+                }
+                familyMap[entry.familyName].orders.push(order);
+            });
+        });
+
+        ordersData = { success: true, orders, families: Object.values(familyMap) };
         renderDashboard();
-        showToast('Backend לא מוגדר — ראו config.js');
+        if (saved.length === 0) showToast('אין הזמנות עדיין (מצב לוקאלי — Backend לא מוגדר)');
         return;
     }
 

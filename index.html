@@ -498,21 +498,34 @@ async function submitOrder() {
     btn.disabled = true;
     btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0"></div> שולח...';
 
-    try {
-        const payload = {
-            familyName: state.familyName.trim(),
-            familyContact: state.familyContact.trim(),
-            orders: state.orders.map(o => ({
-                memberName: o.memberName,
-                shirtType: o.shirtType,
-                color: o.color,
-                sizeCategory: o.sizeCategory,
-                size: o.size,
-                quantity: o.quantity,
-                notes: o.notes || '',
-            })),
-        };
+    const payload = {
+        familyName: state.familyName.trim(),
+        familyContact: state.familyContact.trim(),
+        orders: state.orders.map(o => ({
+            memberName: o.memberName,
+            shirtType: o.shirtType,
+            color: o.color,
+            sizeCategory: o.sizeCategory,
+            size: o.size,
+            quantity: o.quantity,
+            notes: o.notes || '',
+        })),
+    };
 
+    const backendConfigured = CONFIG.APPS_SCRIPT_URL && !CONFIG.APPS_SCRIPT_URL.includes('YOUR_');
+
+    if (!backendConfigured) {
+        // No backend — save to localStorage
+        const saved = JSON.parse(localStorage.getItem('tshirt_orders') || '[]');
+        payload.timestamp = new Date().toLocaleString('he-IL');
+        saved.push(payload);
+        localStorage.setItem('tshirt_orders', JSON.stringify(saved));
+        state.submitted = true;
+        render();
+        return;
+    }
+
+    try {
         const resp = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=submit', {
             method: 'POST',
             body: JSON.stringify(payload),
