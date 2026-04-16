@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>הזמנת חולצות משפחתית</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            direction: rtl;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+
+        header { text-align: center; color: white; margin-bottom: 30px; }
+        header h1 { font-size: 2.2em; margin-bottom: 5px; text-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+        header p { opacity: 0.9; font-size: 1.1em; }
+        .powered-by { font-size: 0.85em; opacity: 0.7; margin-top: 5px; }
+        .powered-by a { color: white; }
+
+        .card {
+            background: white;
+            border-radius: 16px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+        .card h2 {
+            color: #4a4a8a;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+
+        label { display: block; font-weight: 600; color: #555; margin-bottom: 5px; font-size: 0.95em; }
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1em;
+            transition: border-color 0.2s;
+            background: white;
+        }
+        input:focus, select:focus { border-color: #667eea; outline: none; }
+        .field { margin-bottom: 15px; }
+        .row { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; }
+        @media (max-width: 500px) { .row { grid-template-columns: 1fr; } }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+        .btn:active { transform: translateY(0); }
+        .btn-primary { background: #667eea; color: white; }
+        .btn-success { background: #28a745; color: white; }
+        .btn-danger { background: #dc3545; color: white; }
+        .btn-outline { background: transparent; border: 2px solid #667eea; color: #667eea; }
+        .btn-block { width: 100%; justify-content: center; }
+        .btn-sm { padding: 8px 16px; font-size: 0.9em; }
+
+        /* Order item card */
+        .order-item {
+            background: #f8f9ff;
+            border: 2px solid #e8e8f8;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .order-item .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        .order-item .item-number {
+            background: #667eea;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.9em;
+        }
+        .remove-item {
+            background: none;
+            border: none;
+            color: #dc3545;
+            cursor: pointer;
+            font-size: 1.4em;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: background 0.2s;
+        }
+        .remove-item:hover { background: #fee; }
+
+        .color-option {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 3px;
+            transition: all 0.2s;
+            font-size: 0.85em;
+        }
+        .color-option:hover { border-color: #667eea; }
+        .color-option.selected { border-color: #667eea; background: #f0f0ff; }
+        .color-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            flex-shrink: 0;
+        }
+        .colors-grid { display: flex; flex-wrap: wrap; gap: 4px; max-height: 200px; overflow-y: auto; padding: 5px 0; }
+
+        .size-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 3px;
+            font-weight: 600;
+            transition: all 0.2s;
+            text-align: center;
+            min-width: 50px;
+        }
+        .size-btn:hover { border-color: #667eea; }
+        .size-btn.selected { border-color: #667eea; background: #667eea; color: white; }
+        .sizes-grid { display: flex; flex-wrap: wrap; gap: 4px; }
+
+        .size-cat-tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+        .size-cat-tab {
+            padding: 6px 16px;
+            border: 2px solid #ddd;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+        .size-cat-tab.active { background: #5a5a9a; color: white; border-color: #5a5a9a; }
+
+        /* Success screen */
+        .success-screen {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        .success-icon { font-size: 4em; margin-bottom: 15px; }
+        .success-screen h2 { color: #28a745; font-size: 1.8em; margin-bottom: 10px; }
+        .success-screen p { color: #666; font-size: 1.1em; margin-bottom: 20px; }
+
+        .closed-banner {
+            text-align: center;
+            padding: 40px;
+            color: #666;
+        }
+        .closed-banner .icon { font-size: 3em; margin-bottom: 15px; }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-control button {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            background: white;
+            font-size: 1.2em;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+        .quantity-control button:hover { border-color: #667eea; background: #f0f0ff; }
+        .quantity-control .qty-display {
+            font-size: 1.2em;
+            font-weight: 700;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #333;
+            color: white;
+            padding: 14px 28px;
+            border-radius: 10px;
+            z-index: 1000;
+            animation: fadeUp 0.3s ease;
+            font-weight: 500;
+        }
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        .loading { text-align: center; padding: 30px; color: #999; }
+        .spinner {
+            border: 3px solid #eee;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 15px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .admin-link {
+            text-align: center;
+            margin-top: 20px;
+            opacity: 0.6;
+            font-size: 0.85em;
+        }
+        .admin-link a { color: white; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1 id="pageTitle">הזמנת חולצות משפחתית</h1>
+        <p id="pageSubtitle">בחרו את הגדלים והצבעים המתאימים לכם</p>
+        <div class="powered-by">מבוסס על קטלוג <a href="https://www.bgood1.co.il/" target="_blank">B-Good</a></div>
+    </header>
+
+    <div id="app">
+        <!-- Dynamic content rendered here -->
+    </div>
+
+    <div class="admin-link">
+        <a href="admin.html">ניהול</a>
+    </div>
+</div>
+
+<script src="config.js"></script>
+<script>
+// ===== State =====
+let state = {
+    familyName: '',
+    familyContact: '',
+    orders: [],
+    submitted: false,
+};
+let nextItemId = 1;
+
+// ===== Init =====
+document.getElementById('pageTitle').textContent = CONFIG.TITLE;
+document.getElementById('pageSubtitle').textContent = CONFIG.SUBTITLE;
+
+if (!CONFIG.ORDERS_OPEN) {
+    document.getElementById('app').innerHTML = `
+        <div class="card">
+            <div class="closed-banner">
+                <div class="icon">🔒</div>
+                <h2>${CONFIG.CLOSED_MESSAGE}</h2>
+            </div>
+        </div>`;
+} else {
+    render();
+}
+
+// ===== Render =====
+function render() {
+    if (state.submitted) {
+        renderSuccess();
+        return;
+    }
+
+    const app = document.getElementById('app');
+    app.innerHTML = `
+        <!-- Family Info -->
+        <div class="card">
+            <h2>פרטי המשפחה</h2>
+            <div class="row">
+                <div class="field">
+                    <label>שם המשפחה *</label>
+                    <input type="text" id="familyName" value="${esc(state.familyName)}"
+                        placeholder="לדוגמה: כהן" oninput="state.familyName = this.value">
+                </div>
+                <div class="field">
+                    <label>טלפון ליצירת קשר *</label>
+                    <input type="tel" id="familyContact" value="${esc(state.familyContact)}"
+                        placeholder="050-1234567" oninput="state.familyContact = this.value">
+                </div>
+            </div>
+        </div>
+
+        <!-- Order Items -->
+        <div id="orderItems">
+            ${state.orders.map((order, idx) => renderOrderItem(order, idx)).join('')}
+        </div>
+
+        <!-- Add item button -->
+        <div style="text-align: center; margin-bottom: 20px;">
+            <button class="btn btn-outline" onclick="addItem()">
+                + הוסיפו חולצה
+            </button>
+        </div>
+
+        <!-- Submit -->
+        ${state.orders.length > 0 ? `
+        <div class="card" style="text-align:center;">
+            <h2>סיכום: ${state.orders.reduce((s, o) => s + o.quantity, 0)} חולצות</h2>
+            <p style="color:#666; margin-bottom:15px;">
+                ${state.orders.map(o => `${o.memberName || 'ללא שם'}: ${o.shirtType} ${o.color} (${o.size})`).join(' | ')}
+            </p>
+            <button class="btn btn-success btn-block" onclick="submitOrder()" id="submitBtn">
+                שליחת הזמנה
+            </button>
+        </div>
+        ` : `
+        <div class="card" style="text-align:center; color:#999; padding:30px;">
+            <p>לחצו "+ הוסיפו חולצה" להתחיל</p>
+        </div>
+        `}
+    `;
+}
+
+function renderOrderItem(order, idx) {
+    const sizes = SIZES[order.sizeCategory];
+
+    return `
+    <div class="card order-item">
+        <div class="item-header">
+            <div style="display:flex; align-items:center; gap:10px;">
+                <div class="item-number">${idx + 1}</div>
+                <span style="font-weight:600; color:#555;">חולצה ${idx + 1}</span>
+            </div>
+            <button class="remove-item" onclick="removeItem(${order.id})" title="הסרה">&times;</button>
+        </div>
+
+        <div class="row">
+            <div class="field">
+                <label>שם (אופציונלי)</label>
+                <input type="text" value="${esc(order.memberName)}" placeholder="למי החולצה?"
+                    oninput="updateItem(${order.id}, 'memberName', this.value)">
+            </div>
+            <div class="field">
+                <label>סוג חולצה</label>
+                <select onchange="updateItem(${order.id}, 'shirtType', this.value)">
+                    ${SHIRT_TYPES.map(t =>
+                        `<option value="${esc(t.name)}" ${order.shirtType === t.name ? 'selected' : ''}>${t.name}</option>`
+                    ).join('')}
+                </select>
+            </div>
+        </div>
+
+        <!-- Color picker -->
+        <div class="field">
+            <label>צבע: <strong>${order.color}</strong></label>
+            <div class="colors-grid">
+                ${Object.entries(COLORS).map(([name, hex]) => `
+                    <div class="color-option ${order.color === name ? 'selected' : ''}"
+                         onclick="updateItem(${order.id}, 'color', '${name}'); render();">
+                        <span class="color-dot" style="background:${hex}"></span>
+                        <span>${name}</span>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <!-- Size -->
+        <div class="field">
+            <label>קטגוריית מידה</label>
+            <div class="size-cat-tabs">
+                ${Object.entries(SIZE_CATEGORY_LABELS).map(([key, label]) => `
+                    <div class="size-cat-tab ${order.sizeCategory === key ? 'active' : ''}"
+                         onclick="updateItem(${order.id}, 'sizeCategory', '${key}'); updateItem(${order.id}, 'size', SIZES['${key}'][0]); render();">
+                        ${label}
+                    </div>
+                `).join('')}
+            </div>
+            <label>מידה: <strong>${order.size}</strong></label>
+            <div class="sizes-grid">
+                ${sizes.map(s => `
+                    <div class="size-btn ${order.size === s ? 'selected' : ''}"
+                         onclick="updateItem(${order.id}, 'size', '${s}'); render();">
+                        ${s}
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+
+        <!-- Quantity -->
+        <div class="field">
+            <label>כמות</label>
+            <div class="quantity-control">
+                <button onclick="changeQty(${order.id}, -1); render();">−</button>
+                <div class="qty-display">${order.quantity}</div>
+                <button onclick="changeQty(${order.id}, 1); render();">+</button>
+            </div>
+        </div>
+
+        <!-- Notes -->
+        <div class="field">
+            <label>הערות (אופציונלי)</label>
+            <input type="text" value="${esc(order.notes || '')}" placeholder="הערות מיוחדות..."
+                oninput="updateItem(${order.id}, 'notes', this.value)">
+        </div>
+    </div>
+    `;
+}
+
+function renderSuccess() {
+    document.getElementById('app').innerHTML = `
+        <div class="card success-screen">
+            <div class="success-icon">&#10003;</div>
+            <h2>ההזמנה נשלחה בהצלחה!</h2>
+            <p>תודה משפחת ${esc(state.familyName)}!<br>ההזמנה שלכם התקבלה.</p>
+            <button class="btn btn-primary" onclick="resetForm()">הזמנה חדשה</button>
+        </div>
+    `;
+}
+
+// ===== Actions =====
+function addItem() {
+    state.orders.push({
+        id: nextItemId++,
+        memberName: '',
+        shirtType: SHIRT_TYPES[0].name,
+        color: 'לבן',
+        sizeCategory: 'adult',
+        size: 'M',
+        quantity: 1,
+        notes: '',
+    });
+    render();
+}
+
+function removeItem(id) {
+    state.orders = state.orders.filter(o => o.id !== id);
+    render();
+}
+
+function updateItem(id, field, value) {
+    const item = state.orders.find(o => o.id === id);
+    if (item) item[field] = value;
+}
+
+function changeQty(id, delta) {
+    const item = state.orders.find(o => o.id === id);
+    if (item) item.quantity = Math.max(1, item.quantity + delta);
+}
+
+async function submitOrder() {
+    if (!state.familyName.trim()) {
+        showToast('נא להזין שם משפחה');
+        document.getElementById('familyName').focus();
+        return;
+    }
+    if (!state.familyContact.trim()) {
+        showToast('נא להזין טלפון');
+        document.getElementById('familyContact').focus();
+        return;
+    }
+    if (state.orders.length === 0) {
+        showToast('נא להוסיף לפחות חולצה אחת');
+        return;
+    }
+
+    const btn = document.getElementById('submitBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<div class="spinner" style="width:20px;height:20px;margin:0"></div> שולח...';
+
+    try {
+        const payload = {
+            familyName: state.familyName.trim(),
+            familyContact: state.familyContact.trim(),
+            orders: state.orders.map(o => ({
+                memberName: o.memberName,
+                shirtType: o.shirtType,
+                color: o.color,
+                sizeCategory: o.sizeCategory,
+                size: o.size,
+                quantity: o.quantity,
+                notes: o.notes || '',
+            })),
+        };
+
+        const resp = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=submit', {
+            method: 'POST',
+            body: JSON.stringify(payload),
+        });
+        const result = await resp.json();
+
+        if (result.success) {
+            state.submitted = true;
+            render();
+        } else {
+            throw new Error(result.error || 'Unknown error');
+        }
+    } catch (err) {
+        showToast('שגיאה בשליחה: ' + err.message);
+        btn.disabled = false;
+        btn.innerHTML = 'שליחת הזמנה';
+    }
+}
+
+function resetForm() {
+    state = { familyName: '', familyContact: '', orders: [], submitted: false };
+    render();
+}
+
+// ===== Helpers =====
+function esc(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showToast(msg) {
+    const t = document.createElement('div');
+    t.className = 'toast';
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 3000);
+}
+</script>
+</body>
+</html>
