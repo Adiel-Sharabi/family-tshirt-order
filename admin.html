@@ -17,36 +17,21 @@
 
         header {
             background: linear-gradient(135deg, #4a4a8a, #667eea);
-            color: white;
-            padding: 25px;
-            border-radius: 16px;
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
+            color: white; padding: 25px; border-radius: 16px; margin-bottom: 20px;
+            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px;
         }
         header h1 { font-size: 1.6em; }
         header .actions { display: flex; gap: 10px; flex-wrap: wrap; }
 
         .card {
-            background: white;
-            border-radius: 12px;
-            padding: 25px;
-            margin-bottom: 20px;
+            background: white; border-radius: 12px; padding: 25px; margin-bottom: 20px;
             box-shadow: 0 2px 10px rgba(0,0,0,0.06);
         }
         .card h2 { color: #4a4a8a; margin-bottom: 15px; font-size: 1.2em; }
 
         .btn {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95em;
-            font-weight: 600;
-            transition: all 0.2s;
+            padding: 10px 20px; border: none; border-radius: 8px; cursor: pointer;
+            font-size: 0.95em; font-weight: 600; transition: all 0.2s;
         }
         .btn:hover { transform: translateY(-1px); }
         .btn-primary { background: #667eea; color: white; }
@@ -56,86 +41,96 @@
         .btn-light { background: white; color: #333; border: 1px solid #ddd; }
         .btn-sm { padding: 6px 14px; font-size: 0.85em; }
 
-        /* Login */
-        .login-card {
-            max-width: 400px;
-            margin: 80px auto;
-            text-align: center;
-        }
+        .login-card { max-width: 400px; margin: 80px auto; text-align: center; }
         .login-card input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 2px solid #ddd;
-            border-radius: 10px;
-            font-size: 1em;
-            margin-bottom: 15px;
-            text-align: center;
+            width: 100%; padding: 12px 15px; border: 2px solid #ddd; border-radius: 10px;
+            font-size: 1em; margin-bottom: 15px; text-align: center;
         }
         .login-card input:focus { border-color: #667eea; outline: none; }
 
-        /* Stats */
         .stats-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 15px;
-            margin-bottom: 20px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 15px; margin-bottom: 20px;
         }
         .stat-card {
-            background: white;
-            border-radius: 12px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.06);
-            border-top: 4px solid #667eea;
+            background: white; border-radius: 12px; padding: 20px; text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.06); border-top: 4px solid #667eea;
         }
         .stat-card .number { font-size: 2.2em; font-weight: 700; color: #4a4a8a; }
         .stat-card .label { color: #888; font-size: 0.9em; margin-top: 5px; }
 
-        /* Table */
         .table-wrap { overflow-x: auto; }
         table { width: 100%; border-collapse: collapse; }
         th, td { padding: 10px 14px; text-align: right; border-bottom: 1px solid #eee; }
         th { background: #f8f9ff; color: #555; font-weight: 600; font-size: 0.9em; position: sticky; top: 0; }
         tr:hover { background: #f5f5ff; }
-        .family-group td { background: #e8e8f8; font-weight: 600; }
         .color-dot {
             width: 16px; height: 16px; border-radius: 50%; display: inline-block;
             border: 1px solid #ccc; vertical-align: middle; margin-left: 5px;
         }
 
-        /* Breakdown */
         .breakdown-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 15px;
+            display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 15px;
         }
         .breakdown-item {
-            background: #f8f9ff;
-            border: 2px solid #e8e8f8;
-            border-radius: 10px;
-            padding: 15px;
+            background: #f8f9ff; border: 2px solid #e8e8f8; border-radius: 10px; padding: 15px;
         }
         .breakdown-item h3 { font-size: 1em; color: #4a4a8a; margin-bottom: 10px; }
         .breakdown-item table { font-size: 0.9em; }
         .breakdown-item th { background: #5a5a9a; color: white; }
 
-        /* Tabs */
         .tabs { display: flex; gap: 5px; margin-bottom: 20px; }
         .tab {
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            background: white;
-            border: 2px solid #ddd;
-            transition: all 0.2s;
+            padding: 10px 20px; border-radius: 8px; cursor: pointer; font-weight: 600;
+            background: white; border: 2px solid #ddd; transition: all 0.2s;
         }
         .tab.active { background: #667eea; color: white; border-color: #667eea; }
+
+        /* Family card header */
+        .family-header {
+            display: flex; justify-content: space-between; align-items: center;
+            flex-wrap: wrap; gap: 10px; margin-bottom: 15px;
+        }
+        .family-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+
+        /* Edit modal */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5); z-index: 100;
+            display: flex; align-items: center; justify-content: center;
+            padding: 20px;
+        }
+        .modal {
+            background: white; border-radius: 16px; padding: 25px;
+            max-width: 700px; width: 100%; max-height: 90vh; overflow-y: auto;
+        }
+        .modal h2 { color: #4a4a8a; margin-bottom: 15px; }
+        .modal .field { margin-bottom: 12px; }
+        .modal label { display: block; font-weight: 600; color: #555; margin-bottom: 4px; font-size: 0.9em; }
+        .modal input, .modal select {
+            width: 100%; padding: 10px 12px; border: 2px solid #ddd; border-radius: 8px; font-size: 0.95em;
+        }
+        .modal input:focus, .modal select:focus { border-color: #667eea; outline: none; }
+        .modal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+        .modal-item {
+            background: #f8f9ff; border: 1px solid #e0e0e0; border-radius: 10px;
+            padding: 15px; margin-bottom: 10px; position: relative;
+        }
+        .modal-item-header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;
+        }
+        .modal-item-num {
+            background: #667eea; color: white; width: 24px; height: 24px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 0.8em; font-weight: 700;
+        }
+        .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 15px; }
+
+        @media (max-width: 600px) { .modal-row { grid-template-columns: 1fr; } }
 
         .toast {
             position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
             background: #333; color: white; padding: 14px 28px; border-radius: 10px;
-            z-index: 1000; animation: fadeUp 0.3s ease;
+            z-index: 200; animation: fadeUp 0.3s ease;
         }
         @keyframes fadeUp {
             from { opacity: 0; transform: translateX(-50%) translateY(20px); }
@@ -154,11 +149,22 @@
 
 <div class="container" id="app"></div>
 
+<!-- Edit Modal (rendered dynamically) -->
+<div id="modalContainer"></div>
+
 <script src="config.js"></script>
 <script>
 let password = sessionStorage.getItem('admin_pw') || '';
 let ordersData = null;
 let activeTab = 'families';
+
+// ===== localStorage helpers =====
+function getAllOrders() {
+    return JSON.parse(localStorage.getItem('tshirt_orders') || '{}');
+}
+function saveAllOrders(data) {
+    localStorage.setItem('tshirt_orders', JSON.stringify(data));
+}
 
 // ===== Init =====
 if (password && password === CONFIG.ADMIN_PASSWORD) {
@@ -202,37 +208,8 @@ async function loadOrders() {
     const backendConfigured = CONFIG.APPS_SCRIPT_URL && !CONFIG.APPS_SCRIPT_URL.includes('YOUR_');
 
     if (!backendConfigured) {
-        // No backend — read from localStorage
-        const saved = JSON.parse(localStorage.getItem('tshirt_orders') || '[]');
-        const orders = [];
-        const familyMap = {};
-
-        saved.forEach(entry => {
-            entry.orders.forEach(o => {
-                const order = {
-                    timestamp: entry.timestamp || '',
-                    familyName: entry.familyName,
-                    familyContact: entry.familyContact,
-                    memberName: o.memberName || '-',
-                    shirtType: o.shirtType,
-                    color: o.color,
-                    sizeCategory: o.sizeCategory,
-                    size: o.size,
-                    quantity: o.quantity,
-                    notes: o.notes || '',
-                };
-                orders.push(order);
-
-                if (!familyMap[entry.familyName]) {
-                    familyMap[entry.familyName] = { name: entry.familyName, contact: entry.familyContact, orders: [] };
-                }
-                familyMap[entry.familyName].orders.push(order);
-            });
-        });
-
-        ordersData = { success: true, orders, families: Object.values(familyMap) };
+        buildOrdersDataFromLocal();
         renderDashboard();
-        if (saved.length === 0) showToast('אין הזמנות עדיין (מצב לוקאלי — Backend לא מוגדר)');
         return;
     }
 
@@ -250,7 +227,6 @@ async function loadOrders() {
             }
             throw new Error(result.error);
         }
-
         ordersData = result;
         renderDashboard();
     } catch (err) {
@@ -263,6 +239,47 @@ async function loadOrders() {
     }
 }
 
+function buildOrdersDataFromLocal() {
+    const allOrders = getAllOrders();
+    const orders = [];
+    const families = [];
+
+    Object.values(allOrders).forEach(entry => {
+        const family = {
+            orderId: entry.id,
+            name: entry.familyName,
+            contact: entry.familyContact,
+            timestamp: entry.timestamp || '',
+            lastModified: entry.lastModified || '',
+            orders: [],
+        };
+
+        entry.orders.forEach(o => {
+            const order = {
+                orderId: entry.id,
+                timestamp: entry.timestamp || '',
+                lastModified: entry.lastModified || '',
+                familyName: entry.familyName,
+                familyContact: entry.familyContact,
+                memberName: o.memberName || '-',
+                shirtType: o.shirtType,
+                color: o.color,
+                sizeCategory: o.sizeCategory,
+                size: o.size,
+                quantity: o.quantity,
+                notes: o.notes || '',
+            };
+            orders.push(order);
+            family.orders.push(order);
+        });
+
+        families.push(family);
+    });
+
+    ordersData = { success: true, orders, families };
+}
+
+// ===== Dashboard =====
 function renderDashboard() {
     const families = ordersData.families || [];
     const allOrders = ordersData.orders || [];
@@ -283,7 +300,6 @@ function renderDashboard() {
             </div>
         </header>
 
-        <!-- Stats -->
         <div class="stats-grid">
             <div class="stat-card"><div class="number">${families.length}</div><div class="label">משפחות</div></div>
             <div class="stat-card"><div class="number">${allOrders.length}</div><div class="label">פריטים</div></div>
@@ -291,14 +307,12 @@ function renderDashboard() {
             <div class="stat-card"><div class="number">${countUniqueSizes(allOrders)}</div><div class="label">מידות שונות</div></div>
         </div>
 
-        <!-- Tabs -->
         <div class="tabs">
             <div class="tab ${activeTab === 'families' ? 'active' : ''}" onclick="activeTab='families'; renderDashboard();">לפי משפחות</div>
             <div class="tab ${activeTab === 'breakdown' ? 'active' : ''}" onclick="activeTab='breakdown'; renderDashboard();">פירוט להזמנה</div>
             <div class="tab ${activeTab === 'all' ? 'active' : ''}" onclick="activeTab='all'; renderDashboard();">כל הפריטים</div>
         </div>
 
-        <!-- Tab Content -->
         <div id="tabContent"></div>
     `;
 
@@ -317,7 +331,16 @@ function renderFamiliesTab(families) {
         const familyQty = family.orders.reduce((s, o) => s + (parseInt(o.quantity) || 0), 0);
         return `
         <div class="card">
-            <h2>משפחת ${esc(family.name)} (${esc(family.contact)}) — ${familyQty} חולצות</h2>
+            <div class="family-header">
+                <div>
+                    <h2 style="margin-bottom:2px;">משפחת ${esc(family.name)} (${esc(family.contact)}) — ${familyQty} חולצות</h2>
+                    <small style="color:#999;">עדכון אחרון: ${family.lastModified || family.timestamp || '-'}</small>
+                </div>
+                <div class="family-actions">
+                    <button class="btn btn-primary btn-sm" onclick="openEditModal('${esc(family.orderId)}')">עריכה</button>
+                    <button class="btn btn-danger btn-sm" onclick="deleteFamily('${esc(family.orderId)}')">מחיקה</button>
+                </div>
+            </div>
             <div class="table-wrap">
                 <table>
                     <thead><tr><th>שם</th><th>סוג חולצה</th><th>צבע</th><th>מידה</th><th>כמות</th><th>הערות</th></tr></thead>
@@ -395,6 +418,202 @@ function renderAllTab(orders) {
     </div></div>`;
 }
 
+// ===== Edit Modal =====
+let editState = null;
+let editNextId = 1;
+
+function openEditModal(orderId) {
+    const allOrders = getAllOrders();
+    const order = allOrders[orderId];
+    if (!order) { showToast('הזמנה לא נמצאה'); return; }
+
+    editState = {
+        orderId: orderId,
+        familyName: order.familyName,
+        familyContact: order.familyContact,
+        items: order.orders.map(o => ({
+            id: editNextId++,
+            memberName: o.memberName || '',
+            shirtType: o.shirtType,
+            color: o.color,
+            sizeCategory: o.sizeCategory || 'adult',
+            size: o.size,
+            quantity: o.quantity || 1,
+            notes: o.notes || '',
+        })),
+    };
+    renderEditModal();
+}
+
+function renderEditModal() {
+    if (!editState) { document.getElementById('modalContainer').innerHTML = ''; return; }
+
+    document.getElementById('modalContainer').innerHTML = `
+    <div class="modal-overlay" onclick="if(event.target===this) closeEditModal()">
+        <div class="modal">
+            <h2>עריכת הזמנה — משפחת ${esc(editState.familyName)}</h2>
+
+            <div class="modal-row">
+                <div class="field">
+                    <label>שם המשפחה</label>
+                    <input type="text" value="${esc(editState.familyName)}"
+                        oninput="editState.familyName = this.value">
+                </div>
+                <div class="field">
+                    <label>טלפון</label>
+                    <input type="tel" value="${esc(editState.familyContact)}"
+                        oninput="editState.familyContact = this.value">
+                </div>
+            </div>
+
+            <h3 style="margin:15px 0 10px; color:#555;">פריטים (${editState.items.length})</h3>
+
+            ${editState.items.map((item, idx) => `
+                <div class="modal-item">
+                    <div class="modal-item-header">
+                        <div style="display:flex;align-items:center;gap:8px;">
+                            <span class="modal-item-num">${idx + 1}</span>
+                            <strong>${esc(item.memberName || 'פריט ' + (idx+1))}</strong>
+                        </div>
+                        <button class="btn btn-danger btn-sm" onclick="removeEditItem(${item.id})">X</button>
+                    </div>
+                    <div class="modal-row">
+                        <div class="field">
+                            <label>שם</label>
+                            <input type="text" value="${esc(item.memberName)}"
+                                oninput="updateEditItem(${item.id}, 'memberName', this.value)">
+                        </div>
+                        <div class="field">
+                            <label>סוג חולצה</label>
+                            <select onchange="updateEditItem(${item.id}, 'shirtType', this.value)">
+                                ${SHIRT_TYPES.map(t =>
+                                    `<option value="${esc(t.name)}" ${item.shirtType === t.name ? 'selected' : ''}>${t.name}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-row">
+                        <div class="field">
+                            <label>צבע</label>
+                            <select onchange="updateEditItem(${item.id}, 'color', this.value); renderEditModal();">
+                                ${Object.keys(COLORS).map(c =>
+                                    `<option value="${c}" ${item.color === c ? 'selected' : ''}>${c}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>קטגוריה</label>
+                            <select onchange="updateEditItem(${item.id}, 'sizeCategory', this.value); updateEditItem(${item.id}, 'size', SIZES[this.value][0]); renderEditModal();">
+                                ${Object.entries(SIZE_CATEGORY_LABELS).map(([k, v]) =>
+                                    `<option value="${k}" ${item.sizeCategory === k ? 'selected' : ''}>${v}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="modal-row">
+                        <div class="field">
+                            <label>מידה</label>
+                            <select onchange="updateEditItem(${item.id}, 'size', this.value)">
+                                ${SIZES[item.sizeCategory].map(s =>
+                                    `<option value="${s}" ${item.size === s ? 'selected' : ''}>${s}</option>`
+                                ).join('')}
+                            </select>
+                        </div>
+                        <div class="field">
+                            <label>כמות</label>
+                            <input type="number" min="1" value="${item.quantity}"
+                                onchange="updateEditItem(${item.id}, 'quantity', Math.max(1, parseInt(this.value)||1))">
+                        </div>
+                    </div>
+                    <div class="field">
+                        <label>הערות</label>
+                        <input type="text" value="${esc(item.notes)}"
+                            oninput="updateEditItem(${item.id}, 'notes', this.value)">
+                    </div>
+                </div>
+            `).join('')}
+
+            <button class="btn btn-light btn-sm" onclick="addEditItem()" style="margin-bottom:15px;">+ הוסף פריט</button>
+
+            <div class="modal-actions">
+                <button class="btn btn-light" onclick="closeEditModal()">ביטול</button>
+                <button class="btn btn-success" onclick="saveEdit()">שמור שינויים</button>
+            </div>
+        </div>
+    </div>
+    `;
+}
+
+function updateEditItem(id, field, value) {
+    const item = editState.items.find(i => i.id === id);
+    if (item) item[field] = value;
+}
+
+function removeEditItem(id) {
+    editState.items = editState.items.filter(i => i.id !== id);
+    renderEditModal();
+}
+
+function addEditItem() {
+    editState.items.push({
+        id: editNextId++,
+        memberName: '',
+        shirtType: SHIRT_TYPES[0].name,
+        color: 'לבן',
+        sizeCategory: 'adult',
+        size: 'M',
+        quantity: 1,
+        notes: '',
+    });
+    renderEditModal();
+}
+
+function closeEditModal() {
+    editState = null;
+    document.getElementById('modalContainer').innerHTML = '';
+}
+
+function saveEdit() {
+    if (!editState.familyName.trim()) { showToast('נא להזין שם משפחה'); return; }
+    if (editState.items.length === 0) { showToast('נא להוסיף לפחות פריט אחד'); return; }
+
+    const allOrders = getAllOrders();
+    const existing = allOrders[editState.orderId] || {};
+
+    allOrders[editState.orderId] = {
+        id: editState.orderId,
+        familyName: editState.familyName.trim(),
+        familyContact: editState.familyContact.trim(),
+        timestamp: existing.timestamp || new Date().toLocaleString('he-IL'),
+        lastModified: new Date().toLocaleString('he-IL'),
+        orders: editState.items.map(i => ({
+            memberName: i.memberName,
+            shirtType: i.shirtType,
+            color: i.color,
+            sizeCategory: i.sizeCategory,
+            size: i.size,
+            quantity: i.quantity,
+            notes: i.notes || '',
+        })),
+    };
+
+    saveAllOrders(allOrders);
+    closeEditModal();
+    buildOrdersDataFromLocal();
+    renderDashboard();
+    showToast('ההזמנה עודכנה!');
+}
+
+function deleteFamily(orderId) {
+    if (!confirm('למחוק את כל ההזמנה של משפחה זו?')) return;
+    const allOrders = getAllOrders();
+    delete allOrders[orderId];
+    saveAllOrders(allOrders);
+    buildOrdersDataFromLocal();
+    renderDashboard();
+    showToast('ההזמנה נמחקה');
+}
+
 // ===== Utilities =====
 function countUniqueSizes(orders) {
     const set = new Set();
@@ -403,7 +622,7 @@ function countUniqueSizes(orders) {
 }
 
 function esc(str) {
-    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
 function exportCSV() {
