@@ -160,7 +160,24 @@ let activeTab = 'families';
 
 // ===== localStorage helpers =====
 function getAllOrders() {
-    return JSON.parse(localStorage.getItem('tshirt_orders') || '{}');
+    try {
+        const raw = JSON.parse(localStorage.getItem('tshirt_orders') || '{}');
+        // Migrate from old array format to new object format
+        if (Array.isArray(raw)) {
+            const migrated = {};
+            raw.forEach((entry, i) => {
+                const id = entry.id || ('migrated_' + i + '_' + Date.now());
+                entry.id = id;
+                migrated[id] = entry;
+            });
+            localStorage.setItem('tshirt_orders', JSON.stringify(migrated));
+            return migrated;
+        }
+        return raw;
+    } catch (e) {
+        console.error('Error reading orders:', e);
+        return {};
+    }
 }
 function saveAllOrders(data) {
     localStorage.setItem('tshirt_orders', JSON.stringify(data));
@@ -337,8 +354,8 @@ function renderFamiliesTab(families) {
                     <small style="color:#999;">עדכון אחרון: ${family.lastModified || family.timestamp || '-'}</small>
                 </div>
                 <div class="family-actions">
-                    <button class="btn btn-primary btn-sm" onclick="openEditModal('${esc(family.orderId)}')">עריכה</button>
-                    <button class="btn btn-danger btn-sm" onclick="deleteFamily('${esc(family.orderId)}')">מחיקה</button>
+                    <button class="btn btn-primary btn-sm" data-action="edit" data-id="${esc(family.orderId)}" onclick="openEditModal(this.dataset.id)">עריכה</button>
+                    <button class="btn btn-danger btn-sm" data-action="delete" data-id="${esc(family.orderId)}" onclick="deleteFamily(this.dataset.id)">מחיקה</button>
                 </div>
             </div>
             <div class="table-wrap">
