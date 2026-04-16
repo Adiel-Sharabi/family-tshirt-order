@@ -161,9 +161,11 @@ let ordersData = null;
 let activeTab = 'families';
 
 // ===== Init =====
-if (password) {
+if (password && password === CONFIG.ADMIN_PASSWORD) {
     loadOrders();
 } else {
+    password = '';
+    sessionStorage.removeItem('admin_pw');
     renderLogin();
 }
 
@@ -180,7 +182,12 @@ function renderLogin() {
 }
 
 function login() {
-    password = document.getElementById('pwInput').value;
+    const input = document.getElementById('pwInput').value;
+    if (input !== CONFIG.ADMIN_PASSWORD) {
+        showToast('סיסמה שגויה');
+        return;
+    }
+    password = input;
     sessionStorage.setItem('admin_pw', password);
     loadOrders();
 }
@@ -191,6 +198,16 @@ async function loadOrders() {
             <div class="spinner"></div>
             <p>טוען הזמנות...</p>
         </div>`;
+
+    const backendConfigured = CONFIG.APPS_SCRIPT_URL && !CONFIG.APPS_SCRIPT_URL.includes('YOUR_');
+
+    if (!backendConfigured) {
+        // No backend yet — show empty dashboard
+        ordersData = { success: true, orders: [], families: [] };
+        renderDashboard();
+        showToast('Backend לא מוגדר — ראו config.js');
+        return;
+    }
 
     try {
         const resp = await fetch(CONFIG.APPS_SCRIPT_URL + '?action=getOrders&password=' + encodeURIComponent(password));
